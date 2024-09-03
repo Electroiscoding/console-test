@@ -15,5 +15,34 @@
         // This will print an error message to the console
         console.error("This is a console error message.");
     </script>
+    
+        <script>
+        (function() {
+            const originalLog = console.log;
+            const originalWarn = console.warn;
+            const originalError = console.error;
+
+            function sendLog(type, message) {
+                const img = new Image();
+                img.src = "https://cdpn.io/log?type=" + type + "&message=" + encodeURIComponent(message);
+            }
+
+            console.log = function(message) {
+                originalLog.apply(console, arguments);
+                sendLog('log', message);
+            };
+
+            console.warn = function(message) {
+                originalWarn.apply(console, arguments);
+                sendLog('warn', message);
+            };
+
+            console.error = function(message) {
+                originalError.apply(console, arguments);
+                sendLog('error', message);
+            };
+        })();
+        </script>
+    
 </body>
 </html>
